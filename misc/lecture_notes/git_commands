@@ -6,3 +6,9 @@ $ git commit -m "Breif message about what was done"
 
 #Pushes the master branch of the local commit to GitHub
 $ git push origin master
+#Pushes branch other than the master branch
+$ git push origin <branch>
+
+#Changes the current branch being worked on "HEAD" to specified branch
+#Do this prior to adding things to commit to this branch
+$ git checkout <branch>
