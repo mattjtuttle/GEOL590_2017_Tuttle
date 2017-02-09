@@ -1,0 +1,34 @@
+You have a directory with the following files:
+Directory:	>GEOL590_2017
+Files:		lectures/05_git
+			lectures/03_data.md
+
+
+#Creates a ".git" directory in the folder
+	>GEOL590_2017 git init
+	
+#Checks if files are under version control
+	>GEOL590_2017 git status
+	
+#Brings file to the staging area where it is not under version control (staging get ready for committing)
+	>GEOL590_2017 git add lectures/05_git.md
+	
+#Committing things takes a file from the staging area and saves it
+#The "-m" flag indicates that you are adding a message to this commit. Message should be breif description
+	>GEOL590_2017 git commit -m "added section on workflow"
+	
+#Branching creates a new line of commits
+	>GEOL590_2017 git branch bad_idea
+	
+#Checking out looks back at previous states
+	>GEOL590_2017 git checkout bad_idea
+	>GEOL590_2017 git checkout master
+	
+#Get in the habit of committing early and often, like saving files.
+#Branching is good when you are working on developing new ideas or directions.
+#dev branch can be merged with the master branch. Changes the pointer of master to the current commit so that is has both the master and head labels.
+
+#Watch command of git
+
+-The head label is able to be moved around
+-The file explorer follows after git

@@ -1,0 +1,44 @@
+Data visualization with ggplot
+
+-R has multiple, dinstinct plotting systems
+	-base graphics
+	-lattice graphics
+	-ggplot2
+	
+-The base R system
+	-Is extremely flexible
+	-Can easily make plots that are incorrect or nonsensicle
+	
+-ggplot2
+	-ggplot2 wants you to decribe a plot, not build it
+	-name stands for a grammar of graphics
+	-Helps you to think about what a plot should look like
+	
+	-When creating a plot you need:
+		-dataset
+		-what kind of plot
+		-axes/data mapping
+			-map variable to x-axis say
+		-scale
+		
+		Required:
+		-dataset
+		-an aesthetic mapping (how are data mapped to visual elements?)
+			-aes()
+		-Type of plot: a geom
+			geom_xxx()
+			-geomes generally associated with stats
+				-ggplot will guess what type of stat you want to use
+		-A statistical transformation (includes identity transformation)
+			stat_xxx()
+		-Scales
+		-A coordinate system
+		-A faceting system
+		-Decoration
+		
+	-Cant do: (if hard, you probably shouldnt be doing it anyway)
+		-multiple axis plots
+		-3D plots
+		-strangely transformed axes
+		-bar graphs, easily
+		-many discipline-specific plots

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "####\n# This is an R script to demonstrate some basic operations in R\n####\n\n# Make three vectors\n\nx <- seq(from=1, to=20, length.out=10)\ny <- rnorm(10)\nlabels <- letters[10]\n\nd <- data.frame(x, y, labels)\n\n# Save a plot\npng(\"test_plot.png\", height=3, width=4, units=\"in\", res=300)\nplot (x, y)\ndev.off()\n\n# Save a .csv file with the data\nwrite.csv(\"test_data.csv\")",
+    "created" : 1484598613542.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1509997605",
+    "id" : "11055D9D",
+    "lastKnownWriteTime" : 1484603727,
+    "last_content_update" : 1484603727928,
+    "path" : "C:/Users/TuttleMatt/Dropbox/GEOL_590/R/task01B_script.R",
+    "project_path" : "R/task01B_script.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

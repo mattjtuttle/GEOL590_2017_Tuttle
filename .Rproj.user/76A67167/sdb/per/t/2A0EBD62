@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "my.variable <- 2+2\nprint(my.variable/3)",
+    "created" : 1484597092435.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3216993292",
+    "id" : "2A0EBD62",
+    "lastKnownWriteTime" : 1484598818,
+    "last_content_update" : 1484598818781,
+    "path" : "C:/Users/TuttleMatt/Dropbox/GEOL_590/R/task01_script.R",
+    "project_path" : "R/task01_script.R",
+    "properties" : {
+        "docOutlineVisible" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
