@@ -1,0 +1,8 @@
+#Adds all changes that were made to the next commit
+$ git add .
+
+#Locally makes the commits previously added with commit note
+$ git commit -m "Breif message about what was done"
+
+#Pushes the master branch of the local commit to GitHub
+$ git push origin master
