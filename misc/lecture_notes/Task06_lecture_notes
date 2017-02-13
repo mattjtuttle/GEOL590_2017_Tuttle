@@ -1,0 +1,93 @@
+-This week is about how to combine actual scholarship (code or data analysis) with the advertisement of your scholarship (papers and manuscripts)
+
+text												code
+
+Introduction										d <- read.csv(~~~)
+	My research is important...						print(plot)
+	
+Methods
+	*...
+	*...
+	*...
+	
+-Markup languages:
+	-Rules for marking up plain text with cues that give and idea or dictate how the text will be formatted
+	
+	-HTML
+		-Most common
+		
+		<HTML>
+			<H1>Introduction</H1>
+			My paper is really interesting
+		</HTML>
+		
+	-Markdown
+		-Functional markup language that is able to be interpreted in plain text
+		-Somewhat limited in scope
+		
+		#Introduction
+		My research is really interesting
+		
+		##Subsection
+		No, it's **really** interesting
+		*bullet1
+		*bullet2
+		
+	-LaTeX/tex
+		-Not really a markup language? But acts like one
+		-Give phenomenal control over document formatting
+		-Can be interpreted in plain text which is great as it can be read by the computer
+		
+		
+-Sample workflow:	
+	.Rmd/.Rnw
+	________________________
+	#Intro
+	~~~
+	#Methods
+	d <- read.csv(../data/~~.csv)
+	plot(p)
+	#Discussion
+	________________________
+	|
+	|
+	--> [Markup only] --------------------------
+	|											|
+	|											|
+	|											V
+	--> [Code only] -R-> [R code results] --> [Markup w/ markup results (.md file)]
+												|
+												|
+	----------------PANDOC-----------------------
+	|
+	|
+	V
+	.pdf/.html/.docx
+	________________________
+	Introduction
+	~~~
+	Methods
+	~~~
+	Results
+	~~~
+	________________________
+	
+	image/figure: ![path_to_link]
+	my_analysis.Rmd
+	my_analysis (directory)
+		fig_1.png
+		
+-GitHub will interpret markdown for you. Will not run R code for you.
+	-If the file has been knitted (combined code and text), can easily be seen by others on GitHub.
+	
+GEOL590
+	data
+	R
+	plots
+	reports
+		my_analysis.Rmd
+		
+-Be careful when working with these files to make sure that you are pulling/putting files in the correct directories
+	-Use ".." notation to move up a directory
+	
+-Using R notebook, you can essentially write the paper at the same time that you are actually running the analysis.
