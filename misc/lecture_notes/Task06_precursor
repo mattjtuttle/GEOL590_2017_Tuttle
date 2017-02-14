@@ -1,0 +1,11 @@
+#badplot
+
+For next week:
+	-get an account on github
+		>You should be able to apply for a free education account w/ some extra features
+		>Download git (and not the GUI!)
+
+ggplot(d, aes(x=x,y=y)) +
+	geom_() +
+	scale_ _ _() +
+	facet_grid(~)

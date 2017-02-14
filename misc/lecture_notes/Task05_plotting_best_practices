@@ -1,0 +1,9 @@
+Best practices for making plots:
+	
+	Problem:										Solution:
+	1. Data are meaningless							Do good science
+	2. Smoothing is misleasding						Be judicious w/ smoothing (or have theory to explain)
+	3. Observations not stated (n=?)				State observations or show them
+	4. Plot exists									Show simple data w/ table or text
+	5. Visual complexity							Simplify
+	6. Poor resolution								Save plots at display size
