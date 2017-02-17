@@ -1,6 +1,8 @@
 ---
 title: "Task 06 - R Notebook"
-output: html_notebook
+output:
+  html_document: default
+  html_notebook: default
 ---
 
 ## Introduction:
@@ -13,7 +15,7 @@ The following code was used to create a plot to allow the biofilm data to be vis
 
 ```{r}
 #Creates a dataframe of the biofilm data called "biofilm" from a .csv file in the data folder
-biofilm <- read.csv("data/biofilm_data.csv", header = TRUE)
+biofilm <- read.csv("../data/biofilm_data.csv", header = TRUE)
 
 #Changes the order of values in the sample factor of the biofilm dataframe
 biofilm$sample <- factor(biofilm$sample, levels = c("CB-D", "CB-A", "CB-AD"))
@@ -28,7 +30,21 @@ plot <- ggplot(biofilm, aes(sample, value)) +
 
 print(plot)
 
+#Creates subsets of dataset by sample so that in line code in table below can take average values
+D <- biofilm[biofilm$sample == "CB-D", ]
+A <- biofilm[biofilm$sample == "CB-A", ]
+AD <- biofilm[biofilm$sample == "CB-AD", ]
+
+
 ```
+
+Averages of each sample are may be found in the table below:
+
+*Sulfitobacter* sp. | Average of relative biofilm formation
+--------------------|---------------------------------------
+CB-D                | `r mean(D$value) #calculates mean values of CB-D subsetted data`
+CB-A                | `r mean(A$value) #calculates mean values of CB-A subsetted data`
+CB-AD               | `r mean(AD$value) #calculates mean values of CB-AD subsetted data`
 
 ## Discussion:
 
