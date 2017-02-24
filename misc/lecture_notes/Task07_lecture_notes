@@ -1,0 +1,103 @@
+Welcome to the tidyverse
+www.rstudio.com/resources/cheatsheets
+
+-Based on the idea of tidy data
+-Going to be a change in the way that we have been using R
+
+-Pipes
+	-takes output from one thing to the input of something else
+
+-Package: dplyr
+	-Package at the center of the tidyverse
+	-Wants to work with dataframes (hence the d in the name, version of plyr software optimized for work with dataframes)
+	-Newer, faster, and better than the previous plyr software
+	-Very good at applying the split-apply-combine paradigm
+	-Makes use of pipes, but no requirement to use pipes when using dplyr
+		-with pipe:
+			mtcars %>%
+				group_by(cyl)
+		-no pipe:
+			mtcars <- group_by(mtcars, cyl)
+	-A lot of the things that dplyr does may also be performed in base R, but dplyr puts it in nice format that is easily integrated into pipes
+	
+	%>% is a pipe, it takes things from one place and brings the to another
+	
+	#Creates a plot as we had been doing
+	ggplot(mtcars, aes(x = disp, y = mpg)) +
+		geom_point()
+	
+	#Using the pipe brings the mtcars dataset and inputs it into the first argument that is taken by the ggplot function
+	mtcars %>% ggplot(aes(x = disp, y = mpg)) +
+		geom_point()
+		
+	#The pipe here takes mtcars and gives nrow() and argument to make calculations with
+	mtcars %>% nrow()
+	
+	mtcars
+	disp		mpg
+	
+	#Creates a new column in the mtcars dataframe that is the values of mpg divided by disp, plus 7
+	mtcars$mpg.per.disp <- mtcars$mpg/mtcars$disp
+	mtcars$new.col <- mtcars$mpg.per.displ + 7
+	
+	mtcars
+	disp		mpg		new.col
+	
+	#Below is pseudocode.
+	mtcars %>%
+		mutate(mpg.per.disp) %>% 		#Mutate function allows for changes of columns. Here mutate creates the variable mpg divided by disp
+		add 7 %>%
+		plot it 
+	
+-Things to get out of this class:
+	-Code is meant/should be written to explain to other humans about what you want the computer to do.
+	-Split-apply-combine paradigm:
+		
+		Forest		Tree		Height
+		A			1			7.2			#Step 2: Apply transformation, e.g. take the mean
+		A			2			8.1			}f(x) = mean(x) -> 7ish -> put in table
+		A			3			5.6
+		................................	#Step 1: Split up the data, e.g. group by forest
+		B			1			1.2
+		B			2			2.6
+		B			3			11.9
+		................................
+		C			1			5
+		C			2			19
+		C			3			143
+		
+											#Step 3: Combine data to plot or put data in table
+											
+	
+-Using the mtcars dataset, what is the average mileage per the number of cylinders?
+
+	mtcars_summ <- mtcars %>%
+		group_by(cyl) %>%
+		summarise(mean.mpg = mean(mpg, na.rm = TRUE), 		#na.rm = TRUE means to exclude and datapoints that are NA rather than throwing out the entire dataset
+			sd.mpg = sd(mpg, na.rm = TRUE),
+			meaningless = mean.mpg + sd.mpg))
+			
+	mtcars_summ <- mtcars %>%
+		group_by(cyl) %>%
+		mutate(mpg.per.disp = mpg/disp)
+		
+-Summarise() vs. mutate()
+	-Summarise() throws away all other data that is not used in the mtcars dataset
+	-Summarise() does not change the data
+	-Mutate() changes or tansforms values
+	-Mutate() adds a new column and does not change any rows
+	
+-Ways to remove columns:
+	-Subsetting, not the best and not the most readable
+	-Using the select() function. It is designed to select different columns
+		select(mtcars, !disp)
+		
+-Tibble = table dataframe
+	tbl_df
+	-Has all the properties of a dataframe plus some additional data
+	-Comes about when you expose data to the tidyverse
+	-As example, when splitting the table into groups as above
+		
+-Remember that "." is used to separate words in a vector
+-"_" is used to separate words in a dataframe
+-We work on dataframes but transformations take vectors as arguments

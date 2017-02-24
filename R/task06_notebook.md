@@ -1,10 +1,4 @@
----
-title: "Task 06 - R Notebook"
-output:
-  html_document:
-    keep_md: TRUE
-  html_notebook: default
----
+# Task 06 - R Notebook
 
 ## Introduction:
 
@@ -14,7 +8,8 @@ This notebook has been created as part of Task 06 for the course GEOL 590. It im
 
 The following code was used to create a plot to allow the biofilm data to be visualized:
 
-```{r}
+
+```r
 #Creates a dataframe of the biofilm data called "biofilm" from a .csv file in the data folder
 biofilm <- read.csv("../data/biofilm_data.csv", header = TRUE)
 
@@ -30,22 +25,24 @@ plot <- ggplot(biofilm, aes(sample, value)) +
   labs(x = "Sample", y = "Relative biofilm formation")
 
 print(plot)
+```
 
+![](task06_notebook_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+```r
 #Creates subsets of dataset by sample so that in line code in table below can take average values
 D <- biofilm[biofilm$sample == "CB-D", ]
 A <- biofilm[biofilm$sample == "CB-A", ]
 AD <- biofilm[biofilm$sample == "CB-AD", ]
-
-
 ```
 
 Averages of each sample are may be found in the table below:
 
 *Sulfitobacter* sp. | Average of relative biofilm formation
 --------------------|---------------------------------------
-CB-D                | `r mean(D$value) #calculates mean values of CB-D subsetted data`
-CB-A                | `r mean(A$value) #calculates mean values of CB-A subsetted data`
-CB-AD               | `r mean(AD$value) #calculates mean values of CB-AD subsetted data`
+CB-D                | 0.153375
+CB-A                | 0.2608333
+CB-AD               | 0.1376667
 
 ## Discussion:
 
