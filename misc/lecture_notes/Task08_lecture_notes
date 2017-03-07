@@ -1,0 +1,29 @@
+my_fun <- function(x, y, z) {
+	x
+	}
+	
+-Functions are objects
+-Loading a package loads a whole set of functions, datasets, and documentation
+-R automatically returns whatever the last name thing is in a function
+	-Can also call whatever you want to return at the end of teh function in curly brackets.
+	-Avoid using the function "Return". Instead, just state whateverti is you would like returned.
+-"source()" runs a file (can be a script or a function)
+-Any information in a function you should directly pass to it in the form of an argument. Do not allow functions to pull data directly from the global environment.
+-An "=" sets a parameter at its default value. Useful when there are options available but you know what arguments should probably be.
+-"..." passes through arguments to another function? (a way to have an unspecified number of arguments?)
+-"browser()" is a very useful function
+	-allows you to work on the command line from that particular environment (e.g. you can see the order of packages being searched at a paricular location with "search()")
+
+-Want to check to make sure that arguments that your function wants are in the correct format
+	
+	e.g.
+	if(class(x) != "numeric") {
+		stop("x is not a numeric vector")
+		
+	-Can issue a:
+		-Message	"message()"
+			-Most mild, just prints to the console
+		-Warning	"warning()"
+			-Prints a warning message to the console
+		-Error		"stop()"
+			-Forces the code to stop running and prints an error message

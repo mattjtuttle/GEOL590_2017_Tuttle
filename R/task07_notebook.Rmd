@@ -1,0 +1,82 @@
+---
+title: "Task 07 - R Notebook"
+output:
+  html_document:
+    keep_md: TRUE
+  html_notebook: default
+---
+
+##Introduction
+
+This R Markdown Notebook has been created for as part of Task 06 for the course GEOL 590. This task is an introduction to using the **dplyr** package with the built-in datasets **nycflights13** and **babynames**.
+
+##Assigned tasks
+
+* Using the `nycflights13::weather`:
+    * Determine whether there are any clear outliers in wind speed (`wind_speed`) that should be rejected. If so, filter those bad point(s) and proceed.
+    * What direction has the highest median speed at each airport? Make a table and a plot of median wind speed by direction, for each airport. *Optional fun challenge: If you like, this is a rare opportunity to make use of `coord_polar()`.*
+    
+```{r}
+library(tidyverse) #Loads the packages associated with the tidyverse
+library(nycflights13) #Loads the nycflights dataset
+
+#Calculates median wind speed of data by airport and direction for use in table and plot
+median_wind_speed <- weather %>%
+  group_by(origin, wind_dir) %>%
+  select(origin, wind_dir, wind_speed) %>%
+  #Filters out large outlier in wind speed as well as data for which there is no wind direction specified
+  filter(wind_speed < 50, wind_dir != "NA", wind_dir != "0") %>%
+  summarise(Median.Wind.Speed = median(wind_speed, na.rm = TRUE)) %>%
+  rename(Wind.Direction = wind_dir, Origin = origin)
+
+
+library(DT) #Loads the DT package which provides an R interface for the JavaScript library DataTables
+
+#Creates a datatable of median wind speed data using the DT package
+datatable(median_wind_speed, class = "cell-border stripe", colnames = c("Airport", "Wind Direction", "Median Wind Speed (mph)"))
+
+#Makes a plots of median wind speed as a function of wind direction by airport
+wind_speed_plot <- ggplot(median_wind_speed, aes(Wind.Direction, Median.Wind.Speed, color = Median.Wind.Speed)) +
+  geom_point() +
+  facet_wrap(~Origin) +
+  labs(x = "Wind direction", y = "Median wind speed (mph)")
+
+print(wind_speed_plot)
+
+```
+
+* Using `nycflights13::flights` and `nycflights13::airlines`:
+    * Make a table with two columns: airline name (not carrier code) and median distance flown from JFK airport. The table should be arranged in order of decreasing mean flight distance. Hint: use a `_join` function to join `flights` and `airlines`.
+    
+```{r}
+
+```
+
+* Make a *wide-format* data frame that displays the number of flights that leave Newark ("EWR") airport each month, from each airline
+
+```{r}
+
+```
+
+* Using the **babynames** dataset:
+    * Identify the ten most common male and female names in 2014. Make a plot of their frequency (`prop`) since 1880. (This may require two separate piped statements). 
+    * Make a single table of the 26th through 29th most common girls names in the year 1896, 1942, and 2016
+
+```{r}
+
+```
+
+* Write task that involves some of the functions on the Data Wrangling Cheat Sheet and execute it. You may either use your own data or data packages (e.g., the ones listed [here](https://blog.rstudio.org/2014/07/23/new-data-packages/)).
+
+```{r}
+
+```
+
+##Optional challenge
+
+Using regular expressions, make a plot of the change in frequency of some letter pattern in names. For instance: how has the frequency of female names ending in "leigh" changed over time relative to names ending in "lee"?
+
+```{r}
+
+```
+
