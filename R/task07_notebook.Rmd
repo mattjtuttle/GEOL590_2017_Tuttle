@@ -29,10 +29,13 @@ median_wind_speed <- weather %>%
   summarise(Median.Wind.Speed = median(wind_speed, na.rm = TRUE)) %>%
   rename(Wind.Direction = wind_dir, Origin = origin)
 
+#Prints an unformatted table of data that can be seen in most file types
+print(median_wind_speed)
 
 library(DT) #Loads the DT package which provides an R interface for the JavaScript library DataTables
 
 #Creates a datatable of median wind speed data using the DT package
+#This interactive datatable is only able to be seen when opening as an HTML file
 datatable(median_wind_speed, class = "cell-border stripe", colnames = c("Airport", "Wind Direction", "Median Wind Speed (mph)"))
 
 #Makes a plots of median wind speed as a function of wind direction by airport
