@@ -1,0 +1,25 @@
+-----Packages-----
+
+-Packages contain the following: a description file, a namespace file, and a directory called R.
+	-Description and namespace files are basic text files that do not have file name extensions
+	-They have a specific format that they must follow
+	
+-The function create("package.name") creates new packages
+	-Have a name that makes sense and does not contain uppercase letters
+	-Make names that are Googleable if it is to be distributed
+	
+-build() creates a zipped package file
+
+-install_github("adsteen/classex") installs packages from GitHub that is not avaailable on CRAN
+
+##' is a header comment
+	-They have a sepecific format
+-Roxygen automatically creates documentation for R code, can take directly from header comments
+	
+-You can assign if statement TRUE/FALSE objects as shorthand
+	For example:
+	if(x)
+		print(y)
+	is the same as:
+	if(x == TRUE)
+		print(y)
