@@ -27,10 +27,9 @@ median_wind_speed <- weather %>%
   #Filters out large outlier in wind speed as well as data for which there is no wind direction specified
   filter(wind_speed < 50, wind_dir != "NA", wind_dir != "0") %>%
   summarise(Median.Wind.Speed = median(wind_speed, na.rm = TRUE)) %>%
-  rename(Wind.Direction = wind_dir, Origin = origin)
+  rename(Wind.Direction = wind_dir, Origin = origin) %>%
+  print()
 
-#Prints an unformatted table of data that can be seen in most file types
-print(median_wind_speed)
 
 library(DT) #Loads the DT package which provides an R interface for the JavaScript library DataTables
 
@@ -53,33 +52,99 @@ print(wind_speed_plot)
     
 ```{r}
 
+#Joins the flights and airlines datatables together so full airline names may be displayed
+flights_and_airlines <- inner_join(flights, airlines, by = "carrier")
+
+#Calculates the median distance of flights that leave from JFK by airline
+median_dist_by_airline <- flights_and_airlines %>%
+  select(name, origin, distance) %>%
+  filter(origin == "JFK") %>%
+  group_by(name) %>%
+  summarise(Median.Distance = median(distance)) %>%
+  arrange(Median.Distance) %>%
+  print()
+
 ```
 
 * Make a *wide-format* data frame that displays the number of flights that leave Newark ("EWR") airport each month, from each airline
 
 ```{r}
 
+library(reshape2) #Loads the reshape2 package for transforming data format
+
+#Calculates the number of flights that leave Newark each month by airline
+num_flights_from_EWR <- flights_and_airlines %>%
+  select(name, origin, month) %>%
+  filter(origin == "EWR") %>%
+  group_by(month, name) %>%
+  summarise(Number.of.flights = length(name)) %>%
+  dcast(name ~ month) %>%
+  print()
+
 ```
 
 * Using the **babynames** dataset:
-    * Identify the ten most common male and female names in 2014. Make a plot of their frequency (`prop`) since 1880. (This may require two separate piped statements). 
+    * Identify the ten most common male and female names in 2014. Make a plot of their frequency (`prop`) since 1880. (This may require two separate piped statements).
+    
     * Make a single table of the 26th through 29th most common girls names in the year 1896, 1942, and 2016
 
 ```{r}
 
+library(babynames) #Loads the babynames dataset
+
+#Determines the ten most common male baby names of 2014
+male_names14 <- babynames %>%
+  filter(sex == "M", year == 2014) %>%
+  arrange(rev(n)) %>%
+  head(n = 10)
+  
+#Determines the ten most common female baby names of 2014
+female_names14 <- babynames %>%
+  filter(sex == "F", year == 2014) %>%
+  arrange(rev(n)) %>%
+  head(n = 10)
+
+#Joins the male and female most popular names of 2014
+pop_names14 <- full_join(male_names14, female_names14)
+  
+#Plots the frequency of the ten most common male and female baby names of 2014 since 1800
+top10_babyname_freq_plot <- semi_join(babynames, pop_names14, by = c("name", "sex")) %>%
+  ggplot(aes(year, prop, color = sex)) +
+  facet_wrap(~name) +
+  geom_point()
+
+print(top10_babyname_freq_plot)
+
+#Creates the table of common names as specified above
+girl_names_26_29 <- babynames %>%
+  filter(year == c(1896, 1942, 2016)) %>%
+  group_by(year) %>%
+  arrange(rev(n)) %>%
+  slice(26:29) %>%
+  select(year, name) %>%
+  print()
+
 ```
+
+*Note: There are no names for 2016 in the above table as the dataset end at 2014.*
 
 * Write task that involves some of the functions on the Data Wrangling Cheat Sheet and execute it. You may either use your own data or data packages (e.g., the ones listed [here](https://blog.rstudio.org/2014/07/23/new-data-packages/)).
 
 ```{r}
 
+#Creates a plot of the sex ratio of some unisex names over time
+unisex_names_plot <- babynames %>%
+  filter(name == c("Jessie", "Taylor", "Jackie")) %>%
+  group_by(name, year) %>%
+  mutate(total.per.year = sum(n)) %>%
+  filter(sex == "M") %>%
+  mutate(percent.male = (100 * n/total.per.year)) %>%
+  filter(percent.male != 100) %>% #Filters out data for years where data is only present for one sex
+  ggplot(aes(year, percent.male)) +
+  facet_wrap(~name) +
+  geom_point() +
+  geom_smooth(method = lm)
+
+print(unisex_names_plot)
+
 ```
-
-##Optional challenge
-
-Using regular expressions, make a plot of the change in frequency of some letter pattern in names. For instance: how has the frequency of female names ending in "leigh" changed over time relative to names ending in "lee"?
-
-```{r}
-
-```
-
