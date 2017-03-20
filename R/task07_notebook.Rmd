@@ -30,13 +30,6 @@ median_wind_speed <- weather %>%
   rename(Wind.Direction = wind_dir, Origin = origin) %>%
   print()
 
-
-library(DT) #Loads the DT package which provides an R interface for the JavaScript library DataTables
-
-#Creates a datatable of median wind speed data using the DT package
-#This interactive datatable is only able to be seen when opening as an HTML file
-datatable(median_wind_speed, class = "cell-border stripe", colnames = c("Airport", "Wind Direction", "Median Wind Speed (mph)"))
-
 #Makes a plots of median wind speed as a function of wind direction by airport
 wind_speed_plot <- ggplot(median_wind_speed, aes(Wind.Direction, Median.Wind.Speed, color = Median.Wind.Speed)) +
   geom_point() +
@@ -148,3 +141,13 @@ unisex_names_plot <- babynames %>%
 print(unisex_names_plot)
 
 ```
+
+The following is code for an interactive datatable of wind speed data from above. This was included to try to make a nicer looking table. The table will only display properly when looking at the html file:
+```{r}
+library(DT) #Loads the DT package which provides an R interface for the JavaScript library DataTables
+
+#Creates a datatable of median wind speed data using the DT package
+#This interactive datatable is only able to be seen when opening as an HTML file
+datatable(median_wind_speed, class = "cell-border stripe", colnames = c("Airport", "Wind Direction", "Median Wind Speed (mph)"))
+```
+
