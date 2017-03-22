@@ -1,0 +1,55 @@
+Workflow:
+
+	RMD file --R code--> Markdown formatted results -> Markdown text + R output --pandoc--> HTML/PDF/DOCX/...
+
+
+Vignettes:
+
+	-About a certain package and is distributed with that package
+	-Are essentially tutorials. Give big picture explanations of what packages are.
+		-Vignettes are big picture while documentation is nuts and bolts.
+	-Easily created with knitr
+	
+	-Packages need to be loaded in vignettes
+	-Can directly integrate LaTeX code within the document. Really useful when including equations.
+		-Use $ for in line code or fences as below:
+			$$
+			LaTeX code here
+			$$
+
+	browseVignettes()
+		-can be used to look at vignettes of all installed packages
+	
+	devtools::useVignette()
+		-Creates a skeleton of a markdown document that is able to be used to start documentation
+		
+		Note: devtools is used so that you do things the correct way. It is possible to get by without using devtools.
+
+		
+Unit testing:
+
+	-Follows the philosophy that code should automatically and frequently test itself
+	-Write code to test your own code
+	
+	Package: testthat
+		-Runs every time that you build your package
+		-Will give you warnings if things are not working
+	
+	devtools::use_testthat(pkg = "package")
+	
+	test_that()
+		expect_equal()
+		expect_error()
+		expect_warning()
+		
+	devtools::check(pkg = "package")
+		-Goes ahead and runs unit tests
+	
+	-In the description folder, other packages that the package is reliant on is included under "Suggestions:"
+	-File name of testing files start with "test_"
+	
+	
+Unrelated notes:
+
+	coord_flip()
+		-allows switching of dependent and independent variables on axes of graphs
