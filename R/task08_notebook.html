@@ -122,7 +122,7 @@ $(document).ready(function () {
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This R Markdown Notebook has been created for as part of Task 06 for the course GEOL 590. This task is an introduction to functions, flow control, and error handling.</p>
+<p>This R Markdown Notebook has been created for as part of Task 08 for the course GEOL 590. This task is an introduction to functions, flow control, and error handling.</p>
 </div>
 <div id="tasks" class="section level1">
 <h1>Tasks</h1>
@@ -156,6 +156,32 @@ $(document).ready(function () {
 <pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
 <pre><code>## filter(): dplyr, stats
 ## lag():    dplyr, stats</code></pre>
+<pre class="r"><code>#Creates a function that adds two columns in a dataframe as specified above
+column_addition &lt;- function(df, col1, col2, name){
+  
+  #Checks that the first argument is a dataframe
+  if(is.data.frame(df) != TRUE)
+    stop(&quot;The first argument is not a dataframe.&quot;)
+  
+  #Checks that two valid columns were input as arguments for the function
+  `%!in%` &lt;- function(x,y){!(`%in%`(x,y))} #Creates a &quot;not in&quot; operator
+  if(TRUE) #Need to fix this
+    warning(&quot;One (or both) of the columns was not found in the specified dataframe.&quot;)
+  
+  #Checks that both columns specified are numeric
+  if(is.numeric(col1) != TRUE | is.numeric(col2) != TRUE)
+    warning(&quot;One of the specified columns is not numeric.&quot;)
+  
+  #Adds two columns and places the output in a new column within the existing dataframe
+  df[[name]] &lt;- df[[col1]] + df[[col2]] #Need to use &quot;[[]]&quot; notation in place of &quot;$&quot; notation
+}
+
+a &lt;- mutate(mtcars, bad.col = &quot;X&quot;)
+test1 &lt;- column_addition(mtcars, &quot;mpg&quot;, &quot;cyl&quot;, &quot;added_values&quot;)</code></pre>
+<pre><code>## Warning in column_addition(mtcars, &quot;mpg&quot;, &quot;cyl&quot;, &quot;added_values&quot;): One (or
+## both) of the columns was not found in the specified dataframe.</code></pre>
+<pre><code>## Warning in column_addition(mtcars, &quot;mpg&quot;, &quot;cyl&quot;, &quot;added_values&quot;): One of
+## the specified columns is not numeric.</code></pre>
 </div>
 <div id="loop-and-performance-metric-tasks" class="section level2">
 <h2>Loop and performance metric tasks</h2>

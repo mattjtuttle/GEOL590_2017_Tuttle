@@ -2,7 +2,7 @@
 
 # Introduction
 
-This R Markdown Notebook has been created for as part of Task 06 for the course GEOL 590. This task is an introduction to functions, flow control, and error handling.
+This R Markdown Notebook has been created for as part of Task 08 for the course GEOL 590. This task is an introduction to functions, flow control, and error handling.
 
 # Tasks
 
@@ -42,6 +42,42 @@ library(tidyverse) #Loads the packages associated with the tidyverse
 ## filter(): dplyr, stats
 ## lag():    dplyr, stats
 ```
+
+```r
+#Creates a function that adds two columns in a dataframe as specified above
+column_addition <- function(df, col1, col2, name){
+  
+  #Checks that the first argument is a dataframe
+  if(is.data.frame(df) != TRUE)
+    stop("The first argument is not a dataframe.")
+  
+  #Checks that two valid columns were input as arguments for the function
+  `%!in%` <- function(x,y){!(`%in%`(x,y))} #Creates a "not in" operator
+  if(TRUE) #Need to fix this
+    warning("One (or both) of the columns was not found in the specified dataframe.")
+  
+  #Checks that both columns specified are numeric
+  if(is.numeric(col1) != TRUE | is.numeric(col2) != TRUE)
+    warning("One of the specified columns is not numeric.")
+  
+  #Adds two columns and places the output in a new column within the existing dataframe
+  df[[name]] <- df[[col1]] + df[[col2]] #Need to use "[[]]" notation in place of "$" notation
+}
+
+a <- mutate(mtcars, bad.col = "X")
+test1 <- column_addition(mtcars, "mpg", "cyl", "added_values")
+```
+
+```
+## Warning in column_addition(mtcars, "mpg", "cyl", "added_values"): One (or
+## both) of the columns was not found in the specified dataframe.
+```
+
+```
+## Warning in column_addition(mtcars, "mpg", "cyl", "added_values"): One of
+## the specified columns is not numeric.
+```
+
 
 ## Loop and performance metric tasks
 * Write a function named that uses a for loop to calculate the sum of the elements of a vector, which is passed as an argument (i.e., it should do the same thing that `sum()` does with vectors). `your_fun(1:10^4)` should return 50005000.

@@ -8,7 +8,7 @@ output:
 
 # Introduction
 
-This R Markdown Notebook has been created for as part of Task 06 for the course GEOL 590. This task is an introduction to functions, flow control, and error handling.
+This R Markdown Notebook has been created for as part of Task 08 for the course GEOL 590. This task is an introduction to functions, flow control, and error handling.
 
 # Tasks
 
@@ -29,13 +29,28 @@ Write a function that fulfills the following criteria:
 ```{r}
 library(tidyverse) #Loads the packages associated with the tidyverse
 
-vector <- c(1:3)
-
 #Creates a function that adds two columns in a dataframe as specified above
-column_addition <- function(df, col1, col2){
+column_addition <- function(df, col1, col2, name){
+  
+  #Checks that the first argument is a dataframe
   if(is.data.frame(df) != TRUE)
-    error("The first argument is not a dataframe")
+    stop("The first argument is not a dataframe.")
+  
+  #Checks that two valid columns were input as arguments for the function
+  `%!in%` <- function(x,y){!(`%in%`(x,y))} #Creates a "not in" operator
+  if(TRUE) #Need to fix this
+    warning("One (or both) of the columns was not found in the specified dataframe.")
+  
+  #Checks that both columns specified are numeric
+  if(is.numeric(col1) != TRUE | is.numeric(col2) != TRUE)
+    warning("One of the specified columns is not numeric.")
+  
+  #Adds two columns and places the output in a new column within the existing dataframe
+  df[[name]] <- df[[col1]] + df[[col2]] #Need to use "[[]]" notation in place of "$" notation
 }
+
+a <- mutate(mtcars, bad.col = "X")
+test1 <- column_addition(mtcars, "mpg", "cyl", "added_values")
 
 ```
 
