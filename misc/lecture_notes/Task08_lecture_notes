@@ -5,8 +5,8 @@ my_fun <- function(x, y, z) {
 -Functions are objects
 -Loading a package loads a whole set of functions, datasets, and documentation
 -R automatically returns whatever the last name thing is in a function
-	-Can also call whatever you want to return at the end of teh function in curly brackets.
-	-Avoid using the function "Return". Instead, just state whateverti is you would like returned.
+	-Can also call whatever you want to return at the end of the function in curly brackets.
+	-Avoid using the function "Return". Instead, just state whatever it is you would like returned.
 -"source()" runs a file (can be a script or a function)
 -Any information in a function you should directly pass to it in the form of an argument. Do not allow functions to pull data directly from the global environment.
 -An "=" sets a parameter at its default value. Useful when there are options available but you know what arguments should probably be.

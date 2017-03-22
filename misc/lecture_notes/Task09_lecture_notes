@@ -13,7 +13,7 @@
 -install_github("adsteen/classex") installs packages from GitHub that is not avaailable on CRAN
 
 ##' is a header comment
-	-They have a sepecific format
+	-They have a specific format
 -Roxygen automatically creates documentation for R code, can take directly from header comments
 	
 -You can assign if statement TRUE/FALSE objects as shorthand

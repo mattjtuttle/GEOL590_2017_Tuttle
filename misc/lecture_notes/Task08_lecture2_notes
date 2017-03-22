@@ -3,16 +3,16 @@ Notes regarding final project:
 	-Need to generate easy to read and concise set of scripts
 	-Generate a set of tools that is relatively robust for different/variations in data input
 	-No single purpose scripts, need to develop tools. Tools are able to be used more than once.
-	-Tool may be able to anticipate problems that your dataset doesnt have but other people might (e.g. datset with missing values)
+	-Tool may be able to anticipate problems that your dataset doesn't have but other people might (e.g. dataset with missing values)
 
 
 -Why are we interested in writing functions in data analysis?
 	-It makes sense to create a function if we want something done the exact same way every single time
 
-	Workflow example:
-	Raw data -> Exclude outliers -> make models of y vs x data -> extract slope, intercept, p-vlaue -> Exclude lms w/ p > 0.05 -> make histogram of growth rates
+	Work-flow example:
+	Raw data -> Exclude outliers -> make models of y vs x data -> extract slope, intercept, p-value -> Exclude lms w/ p > 0.05 -> make histogram of growth rates
 	
-		-Might make sense to take workflow and encapsulate it into a function
+		-Might make sense to take work-flow and encapsulate it into a function
 			make_growth_hist(raw_data)
 		
 		-Split-apply-combine philosophy
@@ -22,12 +22,12 @@ Notes regarding final project:
 					make_growth_hist() %>%
 					print()
 		
-	-If you are going to be writting functions, you should be writing them well
+	-If you are going to be writing functions, you should be writing them well
 		-Defensive programming:
 			-Assume other users are going to be doing something stupid and try to account for that in your code
 			
 -Flow control:
-	-Code that makes descisions about which code will get run
+	-Code that makes decisions about which code will get run
 	-If statements are a form of flow control, likely most important
 	-For loops are a second form. Piping tries to eliminate use of for loops and generally use of for loops in R is not advised.
 	
