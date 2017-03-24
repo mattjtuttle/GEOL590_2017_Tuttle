@@ -38,18 +38,23 @@ column_addition <- function(df, col1, col2, name){
   
   #Checks that two valid columns were input as arguments for the function
   `%!in%` <- function(x,y){!(`%in%`(x,y))} #Creates a "not in" operator
-  if(TRUE) #Need to fix this
+  if(col1 %!in% colnames(df) | col2 %!in% colnames(df))
     warning("One (or both) of the columns was not found in the specified dataframe.")
   
   #Checks that both columns specified are numeric
-  if(is.numeric(col1) != TRUE | is.numeric(col2) != TRUE)
+  #"[[]]" not "$" notation required for selecting column names as arguments
+  if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE)
     warning("One of the specified columns is not numeric.")
   
+  tryCatch(TRUE, error = warning("test error message"))
+  
   #Adds two columns and places the output in a new column within the existing dataframe
-  df[[name]] <- df[[col1]] + df[[col2]] #Need to use "[[]]" notation in place of "$" notation
+  add_col <- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
+  df %>% mutate_(.dots = setNames(list(add_col), name)) #Needed to use standard evaluation functions
+
 }
 
-a <- mutate(mtcars, bad.col = "X")
+#Inculded to test code in development
 test1 <- column_addition(mtcars, "mpg", "cyl", "added_values")
 
 ```
