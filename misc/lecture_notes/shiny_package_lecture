@@ -1,0 +1,36 @@
+---------------------------
+----The R package shiny----
+---------------------------
+
+	-Used to create GUIs
+	-To create: New project-> create a new shiny web application
+	-The obvious use for shiny is to subset data in interesting ways
+
+The "shinyex" directory:
+
+	-absolutely necessary for server apps
+	-"reactive programming"
+	-Files in directory interact with one another
+	
+	Files in directory:
+	
+	1. server.R
+		-Controls actual calculations. Does the math and runs R code
+		-If you put code outside (before) the shinyServer() function, this code will run once when the shiny app actually loads
+			-This is very helpful for loading libraries
+		-To prevent long files, may want to create packages and functions that will perform the data analysis for the shiny app
+		
+	2. ui.R file
+		-Defines how browser interface is laid out
+
+Distribution of shiny apps:
+	
+	-Put it up on GitHub
+	-Buy an Rstudio server (could also get free)
+	-Run Rstudio on your own server
+	-Use the website www.shinyapps.io
+		-Limited run time per month
+		
+Notes:
+-May be useful for displaying data in R package final project
+-It would be great if you were able to build a shiny app that is able to built a script that correlates with what it is that you selected
