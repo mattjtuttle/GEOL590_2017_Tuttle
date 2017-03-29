@@ -1,0 +1,15 @@
+-What is an R package?
+	-1 (or more) R function(s)
+		-roxygen-type doc
+	-Namespace file
+	-Description file
+	-Vignette
+		-Rmd file explaining & demonstrating how to use package
+		
+-Data analysis project components:
+	-Rmd file that implements and explains code
+	-Code
+		-> some functions
+		
+-Should be fairly easy to go between a data analysis project and an R package project since they have more or less the same components
+-When building a package, can essentially start by doing data analysis, creating workflow, and later turning the data analysis into a vignette
