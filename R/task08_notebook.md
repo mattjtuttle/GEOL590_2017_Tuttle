@@ -58,10 +58,11 @@ column_addition <- function(df, col1, col2, name){
   
   #Checks that both columns specified are numeric
   #"[[]]" not "$" notation required for selecting column names as arguments
-  if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE)
+  tryCatch(
+    if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE){
     warning("One of the specified columns is not numeric.")
-  
-  tryCatch(TRUE, error = warning("test error message"))
+  }
+  )
   
   #Adds two columns and places the output in a new column within the existing dataframe
   add_col <- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
@@ -73,14 +74,9 @@ column_addition <- function(df, col1, col2, name){
 test1 <- column_addition(mtcars, "mpg", "cyl", "added_values")
 ```
 
-```
-## Warning in tryCatch(TRUE, error = warning("test error message")): test
-## error message
-```
-
 
 ## Loop and performance metric tasks
-* Write a function named that uses a for loop to calculate the sum of the elements of a vector, which is passed as an argument (i.e., it should do the same thing that `sum()` does with vectors). `your_fun(1:10^4)` should return 50005000.
+* Write a function named `my_sum` that uses a for loop to calculate the sum of the elements of a vector, which is passed as an argument (i.e., it should do the same thing that `sum()` does with vectors). `your_fun(1:10^4)` should return 50005000.
 * Use the `microbenchmark::microbenchmark` function to compare the performace of your function to that of `sum` in adding up the elements of the vector `1:10^4`. The benchmarking code should look something like:
 ```
 test.vec <- 1:10^4
@@ -92,4 +88,51 @@ microbenchmark(
 Is there a difference? Why?
 
 
+```r
+#Does the same thing as the sum() function using a for loop
+my_sum <- function(vec){
+  adding.vector <- 0
+  for (num in vec){
+    adding.vector = adding.vector + num
+  }
+  return(adding.vector)
+}
 
+#Compares the functions of sum() and my_sum()
+test.vec <- 1:10^4
+microbenchmark::microbenchmark(
+  my_sum(test.vec),
+  sum(test.vec)
+)
+```
+
+```
+## Unit: microseconds
+##              expr      min        lq       mean   median        uq
+##  my_sum(test.vec) 3861.665 4461.0295 6600.76618 5387.843 7343.0565
+##     sum(test.vec)    7.450   11.1745   15.61084   14.223   19.9785
+##        max neval
+##  19774.274   100
+##     52.825   100
+```
+
+```r
+#Included to test code development
+test2 <- my_sum(1:10^4)
+test3 <- sum(1:10^4)
+print(test2)
+```
+
+```
+## [1] 50005000
+```
+
+```r
+print(test3)
+```
+
+```
+## [1] 50005000
+```
+
+One difference between the `sum()` function and the `my_sum` function, as indicated by the microbenchmark test, is that the for loop of `my_sum` takes more computing time to calculate its sum when compare the `sum()` function. This is due to the fact that for loops are inherently slow and the `sum()` function of base R has been optimized for speed. Additionally, in the example code given above, the `sum()` function is able to work with and return an integer while the `my_sum()` function must return a double.

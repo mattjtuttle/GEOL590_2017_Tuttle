@@ -170,10 +170,11 @@ column_addition &lt;- function(df, col1, col2, name){
   
   #Checks that both columns specified are numeric
   #&quot;[[]]&quot; not &quot;$&quot; notation required for selecting column names as arguments
-  if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE)
+  tryCatch(
+    if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE){
     warning(&quot;One of the specified columns is not numeric.&quot;)
-  
-  tryCatch(TRUE, error = warning(&quot;test error message&quot;))
+  }
+  )
   
   #Adds two columns and places the output in a new column within the existing dataframe
   add_col &lt;- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
@@ -183,13 +184,11 @@ column_addition &lt;- function(df, col1, col2, name){
 
 #Inculded to test code in development
 test1 &lt;- column_addition(mtcars, &quot;mpg&quot;, &quot;cyl&quot;, &quot;added_values&quot;)</code></pre>
-<pre><code>## Warning in tryCatch(TRUE, error = warning(&quot;test error message&quot;)): test
-## error message</code></pre>
 </div>
 <div id="loop-and-performance-metric-tasks" class="section level2">
 <h2>Loop and performance metric tasks</h2>
 <ul>
-<li>Write a function named that uses a for loop to calculate the sum of the elements of a vector, which is passed as an argument (i.e., it should do the same thing that <code>sum()</code> does with vectors). <code>your_fun(1:10^4)</code> should return 50005000.</li>
+<li>Write a function named <code>my_sum</code> that uses a for loop to calculate the sum of the elements of a vector, which is passed as an argument (i.e., it should do the same thing that <code>sum()</code> does with vectors). <code>your_fun(1:10^4)</code> should return 50005000.</li>
 <li><p>Use the <code>microbenchmark::microbenchmark</code> function to compare the performace of your function to that of <code>sum</code> in adding up the elements of the vector <code>1:10^4</code>. The benchmarking code should look something like:</p>
 <pre><code>test.vec &lt;- 1:10^4
 microbenchmark(
@@ -198,6 +197,36 @@ sum(test.vec)
 )</code></pre>
 <p>Is there a difference? Why?</p></li>
 </ul>
+<pre class="r"><code>#Does the same thing as the sum() function using a for loop
+my_sum &lt;- function(vec){
+  adding.vector &lt;- 0
+  for (num in vec){
+    adding.vector = adding.vector + num
+  }
+  return(adding.vector)
+}
+
+#Compares the functions of sum() and my_sum()
+test.vec &lt;- 1:10^4
+microbenchmark::microbenchmark(
+  my_sum(test.vec),
+  sum(test.vec)
+)</code></pre>
+<pre><code>## Unit: microseconds
+##              expr      min        lq       mean   median        uq
+##  my_sum(test.vec) 3861.665 4461.0295 6600.76618 5387.843 7343.0565
+##     sum(test.vec)    7.450   11.1745   15.61084   14.223   19.9785
+##        max neval
+##  19774.274   100
+##     52.825   100</code></pre>
+<pre class="r"><code>#Included to test code development
+test2 &lt;- my_sum(1:10^4)
+test3 &lt;- sum(1:10^4)
+print(test2)</code></pre>
+<pre><code>## [1] 50005000</code></pre>
+<pre class="r"><code>print(test3)</code></pre>
+<pre><code>## [1] 50005000</code></pre>
+<p>One difference between the <code>sum()</code> function and the <code>my_sum</code> function, as indicated by the microbenchmark test, is that the for loop of <code>my_sum</code> takes more computing time to calculate its sum when compare the <code>sum()</code> function. This is due to the fact that for loops are inherently slow and the <code>sum()</code> function of base R has been optimized for speed. Additionally, in the example code given above, the <code>sum()</code> function is able to work with and return an integer while the <code>my_sum()</code> function must return a double.</p>
 </div>
 </div>
 
