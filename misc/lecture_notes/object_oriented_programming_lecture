@@ -1,0 +1,94 @@
+Object oriented programming:
+
+	Cars
+	
+	have	{	color, drivetrain (engine, axle, wheels)
+	do		{	drive, turn on, crash
+	
+	Ferraris
+	
+	have	{	made in Italy, wealthy owners, look cool
+	do		{	go fast
+	
+	iris
+	-Dataframe built into R
+	
+Some R code:	
+
+	#Making a factor
+	my.fac <- iris$Species
+	
+	#Making linear models in R
+	my.lm <- lm(Sepal.Length ~ Sepal.Width, data=iris)
+	class(my.lm)
+	
+	summary(my.fac)
+	summary(my.lm)
+	
+	plot(my.fac)
+	plot(my.lm)
+	
+Notes:
+	
+	-Generally want to avoid working with factors in the tidyverse
+	-Generally want to avoid side effects with our functions in R due to the fact that you do not want a side effect to write a variable to the Global environment where it may cause bugs
+	-R has multiple object oriented paradigm
+		-S3 objects, S4 objects, and reference class objects
+			-Usually want to think about S3 classes
+				-The exception is with Bioconductor which encourages packages be written with S4 classes
+				-reference class objects are someones attempt to make R an object oriented language, which it is not
+				-Dataframes are actually objects of the S3 class under the hood
+	
+
+Writing object oriented code:
+	-There are no functions in object oriented programming. There are methods and classes. Methods that are associated with a class are only applied to that class
+
+	Classes:
+
+		class car{
+			color
+			brakes
+			drivetrain
+		}
+			
+		class drivetrain{
+			axle
+			engine
+			wheels
+		}
+		
+	Methods:
+	
+		method accelerate.car{
+			a = F / m
+		}
+		
+Dot syntax in R:
+
+	class -> f.a <- funtion (method)
+
+	e.g.
+		print.data.frame
+		summary.factor
+		
+	-can redefine functions to do different things based on what sort of class to fall into
+	
+The pryr packages:
+	-Use it to pry into objects to see what they are
+	
+	typeof()
+		-Checks to see what things are
+		
+	otype()
+		-Asks what type of object this is
+		
+	UseMethod()
+		-Where is the C code that is run when the function (input as a parameter) is run
+		
+	ftyoe()
+		-W
+		
+	methods(class = "class.name")
+		-Lists out all of the methods that are associated with that class
+	
+	-See advanced R textbook chapters on functional programming for more detail
