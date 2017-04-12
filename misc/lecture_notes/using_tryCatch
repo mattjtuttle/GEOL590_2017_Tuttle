@@ -1,0 +1,56 @@
+-----------------
+tryCatch() Notes:
+-----------------
+
+Sample data:
+
+	Forest		Height		Dia
+	A			12			3
+	A			24			5
+	A			16			3
+	A			19			2
+	B			21			3
+	B			17			5
+	B			19			3
+	B			17			NA
+
+	-The NA causes an error when making a linear model
+
+	#Creates a linear model that relates tree height and diameter by forest
+	df %>% group_by(forest) %>%
+		lm(height ~ dia, data = d)
+	
+What does tryCatch() do?
+
+	safe_lm <- function(d){
+		#Pseudocode
+		*if lm(height ~ dia, data = d) is legal,
+		then do it *
+		* otherwise return NA *
+	}
+		
+	safe_lm <- function(d){
+		* try running lm(height ~ dia, data = d)
+		if it works return the result
+		otherwise, return NA
+	}
+
+Why use tryCatch()?
+
+	"trapping the error"
+	-TryCatch is used for error trapping
+	-Want functions that are safe and wont cause issues if the user does something dumb
+	-Tries to prevent bad inputs from stopping/preventing what the program is actually designed to do
+
+	-If you put your entire function within a TryCatch(), you can make more specific error codes
+	-tryCatch allows you to have more control over what happens when there are errors
+	
+Pseudocode example:
+
+	safe_lm <- function(d){
+		tryCatch({
+		what you're trying to do e.g. lm(x ~ y, data = d),
+		warning = function(x) what to do if there is a warning e.g. warning("safe_lm encountered a warning"),
+		error = function(x) what to do if there is an error
+		})
+	}
