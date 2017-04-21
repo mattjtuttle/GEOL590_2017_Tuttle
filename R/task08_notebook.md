@@ -56,22 +56,33 @@ column_addition <- function(df, col1, col2, name){
   if(col1 %!in% colnames(df) | col2 %!in% colnames(df))
     warning("One (or both) of the columns was not found in the specified dataframe.")
   
-  #Checks that both columns specified are numeric
-  #"[[]]" not "$" notation required for selecting column names as arguments
-  tryCatch(
-    if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE){
-    warning("One of the specified columns is not numeric.")
-  }
-  )
   
-  #Adds two columns and places the output in a new column within the existing dataframe
-  add_col <- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
-  df %>% mutate_(.dots = setNames(list(add_col), name)) #Needed to use standard evaluation functions
-
+  tryCatch(
+    
+    #Adds two columns and places the output in a new column within the existing dataframe
+    {
+    add_col <- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
+    df %>% mutate_(.dots = setNames(list(add_col), name)) #Needed to use standard evaluation functions
+    },
+    
+    #Checks that both columns specified are numeric. If not, returns NA
+    #"[[]]" not "$" notation required for selecting column names as argument
+    warning = if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE){
+      message("One of the specified columns is not numeric.")
+      na_col <- mutate_(df, .dots = setNames(list(NA), name))
+      return(na_col)
+      
+  })
 }
 
 #Inculded to test code in development
-test1 <- column_addition(mtcars, "mpg", "cyl", "added_values")
+test1 <- column_addition(mtcars, "mpg", "cyl", "added_values") #Checks normal adding
+na_mtcars <- mutate(mtcars, new = NA)
+test2 <- column_addition(na_mtcars, "mpg", "new", "added_values") #Checks adding when a column is "bad"
+```
+
+```
+## One of the specified columns is not numeric.
 ```
 
 
@@ -108,12 +119,12 @@ microbenchmark::microbenchmark(
 
 ```
 ## Unit: microseconds
-##              expr      min        lq       mean   median        uq
-##  my_sum(test.vec) 3861.665 4461.0295 6600.76618 5387.843 7343.0565
-##     sum(test.vec)    7.450   11.1745   15.61084   14.223   19.9785
-##        max neval
-##  19774.274   100
-##     52.825   100
+##              expr     min       lq       mean   median       uq      max
+##  my_sum(test.vec) 4239.57 4437.326 5517.65107 5290.658 6299.757 9617.593
+##     sum(test.vec)    7.45    8.804   15.42792   12.868   16.931  182.180
+##  neval
+##    100
+##    100
 ```
 
 ```r

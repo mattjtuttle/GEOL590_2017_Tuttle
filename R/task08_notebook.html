@@ -168,22 +168,30 @@ column_addition &lt;- function(df, col1, col2, name){
   if(col1 %!in% colnames(df) | col2 %!in% colnames(df))
     warning(&quot;One (or both) of the columns was not found in the specified dataframe.&quot;)
   
-  #Checks that both columns specified are numeric
-  #&quot;[[]]&quot; not &quot;$&quot; notation required for selecting column names as arguments
-  tryCatch(
-    if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE){
-    warning(&quot;One of the specified columns is not numeric.&quot;)
-  }
-  )
   
-  #Adds two columns and places the output in a new column within the existing dataframe
-  add_col &lt;- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
-  df %&gt;% mutate_(.dots = setNames(list(add_col), name)) #Needed to use standard evaluation functions
-
+  tryCatch(
+    
+    #Adds two columns and places the output in a new column within the existing dataframe
+    {
+    add_col &lt;- lazyeval::interp(~ a + b, a = as.name(col1), b = as.name(col2))
+    df %&gt;% mutate_(.dots = setNames(list(add_col), name)) #Needed to use standard evaluation functions
+    },
+    
+    #Checks that both columns specified are numeric. If not, returns NA
+    #&quot;[[]]&quot; not &quot;$&quot; notation required for selecting column names as argument
+    warning = if(is.numeric(df[[col1]]) != TRUE | is.numeric(df[[col2]]) != TRUE){
+      message(&quot;One of the specified columns is not numeric.&quot;)
+      na_col &lt;- mutate_(df, .dots = setNames(list(NA), name))
+      return(na_col)
+      
+  })
 }
 
 #Inculded to test code in development
-test1 &lt;- column_addition(mtcars, &quot;mpg&quot;, &quot;cyl&quot;, &quot;added_values&quot;)</code></pre>
+test1 &lt;- column_addition(mtcars, &quot;mpg&quot;, &quot;cyl&quot;, &quot;added_values&quot;) #Checks normal adding
+na_mtcars &lt;- mutate(mtcars, new = NA)
+test2 &lt;- column_addition(na_mtcars, &quot;mpg&quot;, &quot;new&quot;, &quot;added_values&quot;) #Checks adding when a column is &quot;bad&quot;</code></pre>
+<pre><code>## One of the specified columns is not numeric.</code></pre>
 </div>
 <div id="loop-and-performance-metric-tasks" class="section level2">
 <h2>Loop and performance metric tasks</h2>
@@ -213,12 +221,12 @@ microbenchmark::microbenchmark(
   sum(test.vec)
 )</code></pre>
 <pre><code>## Unit: microseconds
-##              expr      min        lq       mean   median        uq
-##  my_sum(test.vec) 3861.665 4461.0295 6600.76618 5387.843 7343.0565
-##     sum(test.vec)    7.450   11.1745   15.61084   14.223   19.9785
-##        max neval
-##  19774.274   100
-##     52.825   100</code></pre>
+##              expr     min       lq       mean   median       uq      max
+##  my_sum(test.vec) 4239.57 4437.326 5517.65107 5290.658 6299.757 9617.593
+##     sum(test.vec)    7.45    8.804   15.42792   12.868   16.931  182.180
+##  neval
+##    100
+##    100</code></pre>
 <pre class="r"><code>#Included to test code development
 test2 &lt;- my_sum(1:10^4)
 test3 &lt;- sum(1:10^4)
